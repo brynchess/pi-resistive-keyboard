@@ -49,7 +49,7 @@ FUNCTIONS = [
     [Key.f8],           # 22 Volume up
     [Key.f9],           # 23 Brightness down
     [Key.f10],          # 24 Brightness up
-    [Key.ctrl, Key.f11] # 25 Toggle mute
+    [Key.ctrl, Key.f11],# 25 Toggle mute
     [Key.f12]           # 26 Bring OpenAuto to front
 ]
 
