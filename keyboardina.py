@@ -30,15 +30,27 @@ FUNCTIONS = [
     [Key.left],         #Left
     [Key.enter],        #Select
     [Key.esc],          #Back
+    ['1'],              #Scroll/rotate left
+    ['2'],              #Scroll/rotate right
+    ['f'],              #Navigation
+    ['g'],              #Answer call
     ['h'],              #Home
+    ['j'],              #Media
     ['p'],              #Answer phone
     ['o'],              #End call
     ['b'],              #Toggle play
     ['n'],              #Next track
+    ['v'],              #Previous track
     ['m'],              #Google assistant
+    [Key.f2],           #Toggle night mode
+    [Key.ctrl, Key.f3], #Mode/toggle between active applications
+    [Key.f6],           #Expand/collapse top bar
     [Key.f7],           #Volume down
     [Key.f8],           #Volume up
+    [Key.f9],           #Brightness down
+    [Key.f10],          #Brightness up
     [Key.ctrl, Key.f11] #Toggle mute
+    [Key.f12]           #Bring OpenAuto to front
 ]
 
 keyboard = Controller()
@@ -109,11 +121,12 @@ def loop():
     if get_value() > BUTTONS_TOLERANCE:
         time.sleep(READ_DELAY)
         analogReadValue = get_value()
+        printLog("Analog read value: ", analogReadValue)
         action = detectAction(analogReadValue)
         printLog("Action: ", action)
         if action >= 0:
             keyboard.press(FUNCTIONS[action][0])
-            if (FUNCTIONS[action][1]):
+            if (len(FUNCTIONS[action]) > 1):
                 keyboard.press(FUNCTIONS[action][1])
                 keyboard.release(FUNCTIONS[action][1])
             keyboard.release(FUNCTIONS[action][0])
