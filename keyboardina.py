@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-from ast import If
 from ina219 import INA219
 from ina219 import DeviceRangeError
 import time
@@ -17,40 +16,41 @@ READ_DELAY = 20/1000
 VERBOSE = True
 
 BUTTONS = [
-    [872, 2, 12, 20], # CH+
-    [825, 3, 13, 17], # CH-
-    [767, 7, 18, 10], # VOL+
-    [697, 6, 16, 10], # VOL-
-    [980, 4, 11, 4]   # MODE
+    #[value, single click, double click, long press]
+    [872, 15, 8, 9], # CH+
+    [825, 16, 19, 13], # CH-
+    [767, 22, 22, 14], # VOL+
+    [697, 21, 21, 25], # VOL-
+    [980, 10, 17, 4]   # MODE
 ]
 FUNCTIONS = [
-    [Key.up],           #Up
-    [Key.down],         #Down
-    [Key.right],        #Right
-    [Key.left],         #Left
-    [Key.enter],        #Select
-    [Key.esc],          #Back
-    ['1'],              #Scroll/rotate left
-    ['2'],              #Scroll/rotate right
-    ['f'],              #Navigation
-    ['g'],              #Answer call
-    ['h'],              #Home
-    ['j'],              #Media
-    ['p'],              #Answer phone
-    ['o'],              #End call
-    ['b'],              #Toggle play
-    ['n'],              #Next track
-    ['v'],              #Previous track
-    ['m'],              #Google assistant
-    [Key.f2],           #Toggle night mode
-    [Key.ctrl, Key.f3], #Mode/toggle between active applications
-    [Key.f6],           #Expand/collapse top bar
-    [Key.f7],           #Volume down
-    [Key.f8],           #Volume up
-    [Key.f9],           #Brightness down
-    [Key.f10],          #Brightness up
-    [Key.ctrl, Key.f11] #Toggle mute
-    [Key.f12]           #Bring OpenAuto to front
+    [Key.up],           # 0  Up
+    [Key.down],         # 1  Down
+    [Key.right],        # 2  Right
+    [Key.left],         # 3  Left
+    [Key.enter],        # 4  Select
+    [Key.esc],          # 5  Back
+    ['1'],              # 6  Scroll/rotate left
+    ['2'],              # 7  Scroll/rotate right
+    ['f'],              # 8  Navigation
+    ['g'],              # 9  Answer call
+    ['h'],              # 10 Home
+    ['j'],              # 11 Media
+    ['p'],              # 12 Answer phone
+    ['o'],              # 13 End call
+    ['b'],              # 14 Toggle play
+    ['n'],              # 15 Next track
+    ['v'],              # 16 Previous track
+    ['m'],              # 17 Google assistant
+    [Key.f2],           # 18 Toggle night mode
+    [Key.ctrl, Key.f3], # 19 Mode/toggle between active applications
+    [Key.f6],           # 20 Expand/collapse top bar
+    [Key.f7],           # 21 Volume down
+    [Key.f8],           # 22 Volume up
+    [Key.f9],           # 23 Brightness down
+    [Key.f10],          # 24 Brightness up
+    [Key.ctrl, Key.f11] # 25 Toggle mute
+    [Key.f12]           # 26 Bring OpenAuto to front
 ]
 
 keyboard = Controller()
