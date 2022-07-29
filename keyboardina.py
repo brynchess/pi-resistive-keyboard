@@ -69,7 +69,7 @@ def readPressedButton(analogValue):
         button = BUTTONS[i][0]
         if analogValue > button - BUTTONS_TOLERANCE and analogValue < button + BUTTONS_TOLERANCE:
             return i
-        return -1
+    return -1
 
 def pressTime(pressedButton):
     pressedTimeStart = time.time()
