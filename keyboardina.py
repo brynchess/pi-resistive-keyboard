@@ -14,6 +14,7 @@ LONG_PRESS_TIME = 800/1000
 DOUBLE_CLICK_INTERVAL = 250/1000
 READ_DELAY = 20/1000
 VERBOSE = True
+CHECK_VALUES = False
 
 BUTTONS = [
     #[value, single click, double click, long press]
@@ -117,6 +118,11 @@ def detectAction(analogReadValue):
 def configure():
     ina.configure()
 
+def checkValuesLoop():
+    while True:
+        time.sleep(READ_DELAY)
+        printLog("Analog read value: ", get_value())
+
 def loop():
     if get_value() > BUTTONS_TOLERANCE:
         time.sleep(READ_DELAY)
@@ -134,6 +140,8 @@ def loop():
 
 if __name__ == "__main__":
     configure()
+    if CHECK_VALUES:
+        checkValuesLoop()
     while 1:
         loop()
 
