@@ -11,18 +11,19 @@ MAXIMUM_VALUE = 1024
 ZERO_LEVEL_OFFSET = 40
 BUTTONS_TOLERANCE = 20
 LONG_PRESS_TIME = 800/1000
-DOUBLE_CLICK_INTERVAL = 250/1000
+DOUBLE_CLICK_INTERVAL = 100/1000
 READ_DELAY = 20/1000
 VERBOSE = True
+BASE_VALUE = 560
 CHECK_VALUES = False
 
 BUTTONS = [
     #[value, single click, double click, long press]
-    [872, 15, 8, 9], # CH+
-    [825, 16, 19, 13], # CH-
-    [767, 22, 22, 14], # VOL+
-    [697, 21, 21, 25], # VOL-
-    [980, 10, 17, 4]   # MODE
+    [385, 15, 8, 9], # CH+
+    [266, 16, 19, 13], # CH-
+    [159, 22, 22, 14], # VOL+
+    [51, 21, 21, 25], # VOL-
+    [484, 10, 17, 4]   # MODE
 ]
 FUNCTIONS = [
     [Key.up],           # 0  Up
@@ -62,7 +63,7 @@ def printLog(message, parameter):
         print(message, parameter)
 
 def get_value():
-    return ina.voltage() * MAXIMUM_VALUE / BASE_VOLTAGE - ZERO_LEVEL_OFFSET
+    return BASE_VALUE - (ina.voltage() * MAXIMUM_VALUE / BASE_VOLTAGE - ZERO_LEVEL_OFFSET)
 
 def readPressedButton(analogValue):
     button = -1
