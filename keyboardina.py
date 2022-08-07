@@ -3,7 +3,6 @@ from ina219 import INA219
 from ina219 import DeviceRangeError
 import time
 from pynput.keyboard import Key, Controller
-from os import system, name
 
 SHUNT_OHMS = 0.2
 BASE_VOLTAGE = 5.0 #5 or 3.3
@@ -19,11 +18,11 @@ CHECK_VALUES = False
 
 BUTTONS = [
     #[value, single click, double click, long press]
-    [385, 15, 8, 9], # CH+
-    [266, 16, 19, 13], # CH-
-    [159, 22, 22, 14], # VOL+
-    [51, 21, 21, 25], # VOL-
-    [484, 10, 17, 4]   # MODE
+    [213, 15, 8, 9], # CH+
+    [332, 16, 19, 13], # CH-
+    [439, 22, 22, 14], # VOL+
+    [547, 21, 21, 25], # VOL-
+    [112, 10, 17, 4]   # MODE
 ]
 FUNCTIONS = [
     [Key.up],           # 0  Up
