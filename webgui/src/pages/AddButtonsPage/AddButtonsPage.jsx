@@ -1,61 +1,49 @@
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
-import { Dialog } from 'primereact/dialog';
-import { InputText } from "primereact/inputtext";
 import { useEffect, useState } from "react";
+import { uuidv4 } from "../../tools/uuidv4";
+import { trash_element } from "../../tools/trash_element";
+import { Toolbar } from 'primereact/toolbar';
+import ChangeValueDialog from "./components/ChangeValueDialog";
+import ActionButtons from "./components/ActionButtons";
 
-const ActionButtons = ({onEdit = () => null}) => {
-    const handleRemove = () => null
-    const handleEdit = () => {onEdit()}
-    return (
-        <>
-            <Button severity="danger" icon="pi pi-trash" onClick={handleRemove} tooltip="Remove button" />
-            <Button severity="success" icon="pi pi-pencil" onClick={handleEdit} tooltip="Change value" />
-        </>
-    )
-}
 
-const ChangeValueDialog = ({onOpen = () => null, onClose = () => null, value = 0, visible = false, setVisible = () => null, currentRowData = {} }) => {
+const value = [
+    { button_value: 358, name: "Vol+", tooltip: "", uuid: uuidv4() },
+    { button_value: 233, name: "Vol-", tooltip: "", uuid: uuidv4() },
+    { button_value: 121, name: "Next", tooltip: "", uuid: uuidv4() },
+    { button_value: 21, name: "Prev", tooltip: "", uuid: uuidv4() },
+]
 
-    useEffect(() => {
-        onOpen()
-    }, [])
+function AddButtonsPage() {
+    const [dialogOpen, setDialogOpen] = useState(false)
+    const [currentRowData, setCurrentRowData] = useState()
+    const [buttons, setButtons] = useState(value)
 
-    const onHide = () => {
-        onClose()
-        setVisible(false)
+    const addValue = () => {
+        setButtons((prevState) => ([...prevState, { button_value: 0, name: "", uuid: uuidv4() }]))
+    }
+
+    const removeValue = (index) => {
+        setButtons((prevState) => (trash_element(prevState, index)))
     }
 
     return (
-        <Dialog header={`Change value of ${currentRowData?.name?.toLowerCase()} button`} visible={visible} onHide={onHide}>
-            {`Press and hold ${currentRowData?.name?.toLowerCase()} button on keyboard, then click save to assign a value`}
-            <div className="button-value">
-                <InputText disabled value={value} keyfilter="int" />
-            </div>
-            <Button icon="pi pi-save" label="Save" />
-        </Dialog>
-    )
-}
-
-function AddButtonsPage () {
-    const [dialogOpen, setDialogOpen] = useState(false)
-    const [currentRowData, setCurrentRowData] = useState()
-
-    const value = [
-        {button_value: 358, name: "Vol+", tooltip: ""},
-        {button_value: 233, name: "Vol-", tooltip: ""},
-        {button_value: 121, name: "Next", tooltip: ""},
-        {button_value: 21, name: "Next", tooltip: ""},
-    ]
-
-    return(
         <>
-            <DataTable value={value}>
+            <DataTable value={buttons}>
                 <Column header="Value" field="button_value" />
                 <Column header="Button" field="name" />
-                <Column header="Actions" body={(rowData) => <ActionButtons rowData={rowData} onEdit={() => {setDialogOpen(true); setCurrentRowData(rowData)}} />} />
+                <Column header="Actions" body={(rowData, rowDetails) => <ActionButtons rowData={rowData} rowDetails={rowDetails} onEdit={() => { setDialogOpen(true); setCurrentRowData(rowData) }} onRemove={removeValue} />} />
             </DataTable>
+            <Toolbar
+                start={
+                    <Button label="Add" icon="pi pi-plus" severity="success" onClick={addValue} />
+                }
+                end={
+                    <Button label="Save" icon="pi pi-save" />
+                }
+            />
             <ChangeValueDialog visible={dialogOpen} setVisible={setDialogOpen} currentRowData={currentRowData} />
         </>
     )
