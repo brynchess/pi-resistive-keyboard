@@ -1,7 +1,7 @@
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { uuidv4 } from "../../tools/uuidv4";
 import { trash_element } from "../../tools/trash_element";
 import { Toolbar } from 'primereact/toolbar';
