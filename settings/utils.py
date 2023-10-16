@@ -1,6 +1,7 @@
-from .getsetconfig import Config
+from .config_manager import ConfigManager
 
-config = Config()
+config = ConfigManager()
 
 def get_config():
+    config.import_config()
     return config
