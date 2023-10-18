@@ -16,6 +16,5 @@ class Item(BaseModel):
 @router.patch('/buttons/')
 async def update_config_endpoint(item: Item):
     config = get_config()
-    config.set_buttons(item.item)
-    config.save_config()
-    return item
+    response = config.set_buttons(item.item)
+    return response.get_buttons()
