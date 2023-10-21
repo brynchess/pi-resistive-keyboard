@@ -1,13 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { buttons_url } from "../config";
 import { trash_element } from "../tools/trash_element";
 import { uuidv4 } from "../tools/uuidv4";
 import { change_element } from "../tools/change_element";
+import { MainContext } from "../../context/MainContext";
 
 function useButtons () {
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(false)
     const [data, setData] = useState([])
+
+    const {showError, showInfo, showSuccess, showWarn} = useContext(MainContext);
 
     const fetchData = () => {
         setIsLoading(true)
@@ -23,6 +26,7 @@ function useButtons () {
         .catch(error => {
             setData([])
             setError(error)
+            showError(error.message)
             setIsLoading(false)
         })
         .then(response => {
@@ -53,9 +57,11 @@ function useButtons () {
         .catch(error => {
             setData([])
             setError(error)
+            showError(error.message)
             setIsLoading(false)
         })
         .then(response => {
+            showSuccess("Changes successfully saved")
             setData(response)
             setIsLoading(false)
         })

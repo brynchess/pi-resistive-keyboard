@@ -4,7 +4,6 @@ class ConfigManager:
     CONFIG_URL = "./config.ini"
 
     def __init__(self) -> None:
-        self.config = configparser.ConfigParser()
         self.working_config = configparser.ConfigParser()
         self.buttons = []
         self.import_config()
@@ -24,7 +23,6 @@ class ConfigManager:
         return self.options
     
     def get_buttons(self):
-        print(self.buttons)
         return self.buttons
     
     def get_buttons_dict(self):
@@ -49,12 +47,16 @@ class ConfigManager:
         for key, value in elements.items():
             self.working_config.set(section_name, key, str(value))
         return self
+    
+    def clean_working_config(self):
+        self.working_config = configparser.ConfigParser()
+        return self
 
     def save_config(self):
         self.add_section_to_working_config('options', self.options)
         self.add_section_to_working_config('buttons', self.buttons_dict)
         with open(self.CONFIG_URL, 'w') as config_file:
             self.working_config.write(config_file)
-        self.working_config = configparser.ConfigParser()
+        self.clean_working_config()
         self.import_config()
         return self
