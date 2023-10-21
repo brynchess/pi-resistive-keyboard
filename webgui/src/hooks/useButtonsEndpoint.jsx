@@ -6,40 +6,43 @@ import { change_element } from "../tools/change_element";
 import { MainContext } from "../../context/MainContext";
 import { Button } from "primereact/button";
 
-function useButtonsEndpoint () {
+function useButtonsEndpoint() {
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(false)
     const [data, setData] = useState([])
 
-    const {showError, showSuccess} = useContext(MainContext);
+    const { showError, showSuccess } = useContext(MainContext);
 
     const fetchData = () => {
         setIsLoading(true)
         fetch(buttons_url)
-        .then(response => {
-            if (response.ok) {
-                return response.json()
-            }
-            else {
-                throw Error(response.error)
-            }
-        })
-        .catch(error => {
-            setData([])
-            setError(error)
-            showError(error.message)
-            setIsLoading(false)
-        })
-        .then(response => {
-            setData(response)
-            setIsLoading(false)
-        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json()
+                }
+                else {
+                    throw Error(response.error)
+                }
+            })
+            .catch(error => {
+                setData([])
+                setError(error)
+                showError(error.message)
+                setIsLoading(false)
+                return -1
+            })
+            .then(response => {
+                if (response !== -1){
+                    setData(response)
+                }
+                setIsLoading(false)
+            })
     }
 
     const patchData = () => {
         const request = {
             method: "PATCH",
-            body: JSON.stringify({item: data}),
+            body: JSON.stringify({ item: data }),
             headers: {
                 'Content-type': `application/json`
             }
@@ -47,30 +50,32 @@ function useButtonsEndpoint () {
 
         setIsLoading(true)
         fetch(buttons_url, request)
-        .then(response => {
-            if (response.ok) {
-                return response.json()
-            }
-            else {
-                throw Error(response.error)
-            }
-        })
-        .catch(error => {
-            setData([])
-            setError(error)
-            showError(error.message)
-            setIsLoading(false)
-        })
-        .then(response => {
-            showSuccess("Changes successfully saved")
-            setData(response)
-            setIsLoading(false)
-        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json()
+                }
+                else {
+                    throw Error(response.error)
+                }
+            })
+            .catch(error => {
+                setError(error)
+                showError(error.message)
+                setIsLoading(false)
+                return -1
+            })
+            .then(response => {
+                if (response !== -1) {
+                    showSuccess("Changes successfully saved")
+                    setData(response)
+                }
+                setIsLoading(false)
+            })
     }
 
     useEffect(() => {
         fetchData()
-    },[])
+    }, [])
 
     const addButton = () => {
         setData((prevState) => ([...prevState, { key: "", value: 0, uuid: uuidv4() }]))
@@ -96,7 +101,7 @@ function useButtonsEndpoint () {
         <Button label="Add" icon="pi pi-plus" severity="success" onClick={addButton} />
     )
 
-    return {isLoading, error, data, addButton, removeButton, refetchData: fetchData, changeButton, patchData, SaveButton, UndoButton, AddButton}
+    return { isLoading, error, data, addButton, removeButton, refetchData: fetchData, changeButton, patchData, SaveButton, UndoButton, AddButton }
 }
 
 export default useButtonsEndpoint;
