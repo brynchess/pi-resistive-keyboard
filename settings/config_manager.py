@@ -31,6 +31,11 @@ class ConfigManager:
     def set_option(self, option_name, value):
         self.options[option_name] = value
         return self.options
+    
+    def set_options(self, patch_data):
+        self.options.update(patch_data.dict(exclude_unset=True))
+        self.save_config()
+        return self
 
     def set_buttons(self, buttons):
         buttons_dict = {}

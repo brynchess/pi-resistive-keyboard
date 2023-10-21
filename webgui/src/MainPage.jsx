@@ -3,7 +3,7 @@ import MainMenu from "./MainMenu";
 import DashboardPage from "./pages/DashboardPage/DashboardPage";
 import AddButtonsPage from "./pages/AddButtonsPage/AddButtonsPage";
 import ManageButtonsPage from "./pages/ManageButtonsPage/ManageButtonsPage";
-import SettingsPage from "./pages/SettingsPage/ManageButtonsPage";
+import SettingsPage from "./pages/SettingsPage/SettingsPage";
 import { useState } from "react";
 
 

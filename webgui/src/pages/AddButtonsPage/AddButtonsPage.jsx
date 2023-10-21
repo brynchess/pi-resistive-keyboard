@@ -5,11 +5,11 @@ import { useState } from "react";
 import { Toolbar } from 'primereact/toolbar';
 import ChangeValueDialog from "./components/ChangeValueDialog";
 import ActionButtons from "./components/ActionButtons";
-import useButtons from "../../hooks/useButtons";
+import useButtonsEndpoint from "../../hooks/useButtonsEndpoint";
 
 
 function AddButtonsPage() {
-    const {isLoading, data, addButton, removeButton, changeButton, refetchData, patchData} = useButtons()
+    const {isLoading, data, removeButton, changeButton, SaveButton, UndoButton, AddButton} = useButtonsEndpoint()
     const [dialogOpen, setDialogOpen] = useState(false)
     const [currentRowData, setCurrentRowData] = useState()
     const [currentRowDetails, setCurrentRowDetails] = useState()
@@ -23,13 +23,13 @@ function AddButtonsPage() {
             </DataTable>
             <Toolbar
                 start={
-                    <Button label="Add" icon="pi pi-plus" severity="success" onClick={addButton} />
+                    <AddButton />
                 }
                 end={
-                    <>
-                        <Button label="Save" icon="pi pi-save" onClick={patchData} />
-                        <Button label="Undo changes" icon="pi pi-undo" severity="info" onClick={refetchData} />
-                    </>
+                    <div className="toolbar-buttons">
+                        <SaveButton />
+                        <UndoButton />
+                    </div>
                     
                 }
             />

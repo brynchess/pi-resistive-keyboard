@@ -1,20 +1,29 @@
 import { useContext, useEffect, useState } from "react";
-import { buttons_url } from "../config";
-import { trash_element } from "../tools/trash_element";
-import { uuidv4 } from "../tools/uuidv4";
-import { change_element } from "../tools/change_element";
+import { settings_url } from "../config";
 import { MainContext } from "../../context/MainContext";
+import { Button } from "primereact/button";
 
-function useButtons () {
+
+function useSettingsEndpoint () {
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(false)
-    const [data, setData] = useState([])
+    const [data, setData] = useState({
+        shunt_ohms: 0,
+        base_voltage: 0,
+        maximum_value: 0,
+        zero_level_offset: 0,
+        buttons_tolerance: 0,
+        long_press_time: 0,
+        double_click_interval: 0,
+        read_delay: 0,
+        base_value: 0,
+    })
 
-    const {showError, showInfo, showSuccess, showWarn} = useContext(MainContext);
+    const {showError, showSuccess} = useContext(MainContext);
 
     const fetchData = () => {
         setIsLoading(true)
-        fetch(buttons_url)
+        fetch(settings_url)
         .then(response => {
             if (response.ok) {
                 return response.json()
@@ -24,7 +33,7 @@ function useButtons () {
             }
         })
         .catch(error => {
-            setData([])
+            setData()
             setError(error)
             showError(error.message)
             setIsLoading(false)
@@ -38,14 +47,14 @@ function useButtons () {
     const patchData = () => {
         const request = {
             method: "PATCH",
-            body: JSON.stringify({item: data}),
+            body: JSON.stringify(data),
             headers: {
                 'Content-type': `application/json`
             }
         }
 
         setIsLoading(true)
-        fetch(buttons_url, request)
+        fetch(settings_url, request)
         .then(response => {
             if (response.ok) {
                 return response.json()
@@ -71,19 +80,21 @@ function useButtons () {
         fetchData()
     },[])
 
-    const addButton = () => {
-        setData((prevState) => ([...prevState, { key: "", value: 0, uuid: uuidv4() }]))
+    const changeData = (field, value) => {
+        setData(prevState => (
+            {...prevState, [field]: value}
+            ))
     }
 
-    const removeButton = (index) => {
-        setData((prevState) => (trash_element(prevState, index)))
-    }
+    const SaveButton = () => (
+        <Button label="Save" icon="pi pi-save" onClick={patchData} />
+    )
 
-    const changeButton = (index, buttonData) => {
-        setData((prevState) => (change_element(prevState, index, buttonData)))
-    }
+    const UndoButton = () => (
+        <Button label="Undo changes" icon="pi pi-undo" severity="info" onClick={fetchData} />
+    )
 
-    return {isLoading, error, data, addButton, removeButton, refetchData: fetchData, changeButton, patchData}
+    return {isLoading, error, data, refetchData: fetchData, patchData, changeData, SaveButton, UndoButton}
 }
 
-export default useButtons;
+export default useSettingsEndpoint;

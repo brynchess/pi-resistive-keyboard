@@ -1,10 +1,10 @@
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from endpoints import config_endpoint, buttons_endpoint
+from endpoints import buttons_endpoint, settings_endpoint
 
 endpointsApp = FastAPI()
-endpointsApp.include_router(config_endpoint.router)
+endpointsApp.include_router(settings_endpoint.router)
 endpointsApp.include_router(buttons_endpoint.router)
 
 origins = [
