@@ -1,21 +1,36 @@
 import { useContext, useEffect, useState } from "react";
-import { buttons_url } from "../config";
+import { functions } from "../config";
 import { trash_element } from "../tools/trash_element";
 import { uuidv4 } from "../tools/uuidv4";
 import { change_element } from "../tools/change_element";
 import { MainContext } from "../../context/MainContext";
 import { Button } from "primereact/button";
+import useButtonsEndpoint from "./useButtonsEndpoint";
 
-function useButtonsEndpoint() {
+const addFunctionsToButtons = (buttons = [], functions = {}) => {
+    return buttons.map(button => {
+        if (functions[button.key]) {
+            return {
+                "key": button.key,
+                ...functions[button.key]
+            }
+        } else {
+            return button
+        }
+    })
+}
+
+function useFunctionsEndpoint() {
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(false)
+    const { data: buttons } = useButtonsEndpoint()
     const [data, setData] = useState([])
 
     const { showError, showSuccess } = useContext(MainContext);
 
     const fetchData = () => {
         setIsLoading(true)
-        fetch(buttons_url)
+        fetch(functions)
             .then(response => {
                 if (response.ok) {
                     return response.json()
@@ -33,9 +48,11 @@ function useButtonsEndpoint() {
             })
             .then(response => {
                 if (response !== -1){
-                    setData(response)
+                    const _response = addFunctionsToButtons(buttons, response)
+                    setData(_response)
                 }
                 setIsLoading(false)
+                return response
             })
     }
 
@@ -49,7 +66,7 @@ function useButtonsEndpoint() {
         }
 
         setIsLoading(true)
-        fetch(buttons_url, request)
+        fetch(functions, request)
             .then(response => {
                 if (response.ok) {
                     return response.json()
@@ -74,8 +91,10 @@ function useButtonsEndpoint() {
     }
 
     useEffect(() => {
-        fetchData()
-    }, [])
+        if (buttons?.length > 0) {
+            fetchData()
+        }
+    }, [buttons])
 
     const addButton = () => {
         setData((prevState) => ([...prevState, { key: "", value: 0, uuid: uuidv4() }]))
@@ -97,11 +116,7 @@ function useButtonsEndpoint() {
         <Button label="Undo changes" icon="pi pi-undo" severity="info" onClick={fetchData} />
     )
 
-    const AddButton = () => (
-        <Button label="Add" icon="pi pi-plus" severity="success" onClick={addButton} />
-    )
-
-    return { isLoading, error, data, addButton, removeButton, refetchData: fetchData, changeButton, patchData, SaveButton, UndoButton, AddButton }
+    return { isLoading, error, data, addButton, removeButton, refetchData: fetchData, changeButton, patchData, SaveButton, UndoButton }
 }
 
-export default useButtonsEndpoint;
+export default useFunctionsEndpoint;
