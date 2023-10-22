@@ -11,7 +11,5 @@ async def read_keyoptions_endpoint():
 
 @router.get('/functions/')
 async def read_functions_endpoint():
-    return {
-        "next": {"single": 10, "double": 5, "long": 1},
-        "mode": {"single": 9, "double": 11, "long": 2},
-    }
+    config = get_config()
+    return config.get_functions()

@@ -12,11 +12,17 @@ class ConfigManager:
     def import_config(self):
         self.config = configparser.ConfigParser()
         self.config.read(self.CONFIG_URL)
+        self.functions = {}
         if self.config.has_section("options"):
             self.options = dict(self.config.items("options"))
         if self.config.has_section("buttons"):
             self.buttons_dict = dict(self.config.items("buttons"))
             self.buttons = [{"key": key, "value": value} for key, value in self.config.items("buttons")]
+        if self.config.has_section('functions'):
+            self.functions = {}
+            for key, value in self.config.items("functions"):
+                single, double, long = map(int, value.split())
+                self.functions[key] = {"single": single, "double": double, "long": long}
         return self
 
     def get_options(self):
@@ -24,6 +30,9 @@ class ConfigManager:
     
     def get_buttons(self):
         return self.buttons
+    
+    def get_functions(self):
+        return self.functions
     
     def get_buttons_dict(self):
         return self.buttons_dict
@@ -46,6 +55,8 @@ class ConfigManager:
         self.buttons_dict = buttons_dict
         self.save_config()
         return self
+    
+    
 
     def add_section_to_working_config(self, section_name, elements):
         self.working_config.add_section(section_name)
