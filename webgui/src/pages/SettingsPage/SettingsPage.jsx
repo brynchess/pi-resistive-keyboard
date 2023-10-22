@@ -7,7 +7,9 @@ function SettingsPage () {
 
     return(
         <>
-            {isLoading ? <i className="pi pi-spin pi-cog" /> : <SettingsForm data={data} changeData={changeData}/>}
+            <div className="content">
+                {isLoading ? <i className="pi pi-spin pi-spinner" /> : <SettingsForm data={data} changeData={changeData}/>}
+            </div>
             <Toolbar
             end={
                 <div className="toolbar-buttons">

@@ -9,6 +9,12 @@ function generateInputComponents(data, changeData) {
         },
         "base_voltage": {
             tooltip: "Voltage you're using in your steering wheel"
+        },
+        "read_delay": {
+            tooltip: "It helps avoid the rebound effect. Set it as small as possible."
+        },
+        "zero_level_offset": {
+            tooltip: "Minimal value that triggers action"
         }
     }
 

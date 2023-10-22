@@ -1,3 +1,12 @@
 .p-dialog-mask {
   backdrop-filter: blur(10px);
 }
+
+.content {
+  padding: 1em 0 1em 0;
+}
+
+.toolbar-buttons {
+  display: flex;
+  gap: 1em;
+}
