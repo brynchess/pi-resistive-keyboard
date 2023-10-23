@@ -56,8 +56,21 @@ class ConfigManager:
         self.save_config()
         return self
     
+    def set_functions(self, functions):
+        self.functions_dict = {}
+        for entry in functions:
+            key = entry["key"]
+            single = entry.get("single", 0)
+            double = entry.get("double", 0)
+            long = entry.get("long", 0)
+            self.functions_dict[key] = {"single": single, "double": double, "long": long}
+            self.functions = {}
+        for key, value in self.config.items("functions"):
+            single, double, long = map(int, value.split())
+            self.functions[key] = {"single": single, "double": double, "long": long}
+        self.save_config()    
+        return self
     
-
     def add_section_to_working_config(self, section_name, elements):
         self.working_config.add_section(section_name)
         for key, value in elements.items():
@@ -71,6 +84,9 @@ class ConfigManager:
     def save_config(self):
         self.add_section_to_working_config('options', self.options)
         self.add_section_to_working_config('buttons', self.buttons_dict)
+        for key, values in self.functions.items():
+            value_str = " ".join(str(values[action]) for action in ["single", "double", "long"])
+            self.working_config["functions"][key] = value_str
         with open(self.CONFIG_URL, 'w') as config_file:
             self.working_config.write(config_file)
         self.clean_working_config()

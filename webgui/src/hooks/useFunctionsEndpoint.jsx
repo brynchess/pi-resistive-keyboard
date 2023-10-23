@@ -59,7 +59,7 @@ function useFunctionsEndpoint() {
     const patchData = () => {
         const request = {
             method: "PATCH",
-            body: JSON.stringify({ item: data }),
+            body: JSON.stringify({item: data}),
             headers: {
                 'Content-type': `application/json`
             }
