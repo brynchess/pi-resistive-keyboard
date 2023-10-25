@@ -23,7 +23,7 @@ const addFunctionsToButtons = (buttons = [], functions = {}) => {
 function useFunctionsEndpoint() {
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(false)
-    const { data: buttons } = useButtonsEndpoint()
+    const { data: buttons, refetchData } = useButtonsEndpoint()
     const [data, setData] = useState([])
 
     const { showError, showSuccess } = useContext(MainContext);
@@ -69,6 +69,7 @@ function useFunctionsEndpoint() {
         fetch(functions, request)
             .then(response => {
                 if (response.ok) {
+                    refetchData()
                     return response.json()
                 }
                 else {
@@ -84,7 +85,6 @@ function useFunctionsEndpoint() {
             .then(response => {
                 if (response !== -1) {
                     showSuccess("Changes successfully saved")
-                    setData(response)
                 }
                 setIsLoading(false)
             })

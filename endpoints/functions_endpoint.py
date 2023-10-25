@@ -20,5 +20,5 @@ async def read_functions_endpoint():
 @router.patch('/functions/')
 async def patch_functions_endpoint(item: Item):
     config = get_config()
-    config.set_functions(item.item)
-    return config.get_functions()
+    response = config.set_functions(item.item)
+    return response.get_functions()
