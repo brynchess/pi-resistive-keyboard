@@ -1,5 +1,4 @@
 import { DataTable } from "primereact/datatable";
-import useButtonsEndpoint from "../../hooks/useButtonsEndpoint";
 import { Column } from "primereact/column";
 import useKeyOptionsEndpoint from "../../hooks/useKeyOptionsEndpoint";
 import KeyOptionsDropdown from "../../components/KeyOptionsDropdown";

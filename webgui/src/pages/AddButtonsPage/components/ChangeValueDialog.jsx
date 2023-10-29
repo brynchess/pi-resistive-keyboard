@@ -5,6 +5,7 @@ import { Dropdown } from "primereact/dropdown"
 import { InputText } from "primereact/inputtext"
 import { Checkbox } from 'primereact/checkbox';
 import { useEffect, useState } from "react"
+import WebsocketInputText from "./WebsocketInputText";
 
 const button_names = [
     "vol+",
@@ -22,14 +23,14 @@ const button_names = [
     "home"
 ]
 
-const ChangeValueDialog = ({ onOpen = () => null, onClose = () => null, visible = false, setVisible = () => null, currentRowData = {}, currentRowDetails = {}, changeButton = () => null }) => {
+const ChangeValueDialog = ({ onOpen = () => null, onClose = () => null, visible = false, setVisible = () => null, currentRowData = {}, currentRowDetails = {}, changeButton = () => null, websocketValue = "" }) => {
     const [key, setKey] = useState()
     const [value, setValue] = useState()
     const [allowEdit, setAllowEdit] = useState(false)
 
     useEffect(() => {
         onOpen()
-    }, [])
+    ,[]})
 
     useEffect(() => {
         setKey(currentRowData?.key)
@@ -48,13 +49,18 @@ const ChangeValueDialog = ({ onOpen = () => null, onClose = () => null, visible 
                 <Button icon="pi pi-save" label="Save" onClick={() => {changeButton(currentRowDetails?.rowIndex, {key, value}); setVisible(false)}} />
             }
         >
-            {`Press and hold ${currentRowData?.name?.toLowerCase()} button on keyboard, then click save to assign a value`}
+            {`Press and hold ${currentRowData?.name?.toLowerCase()} button on keyboard, then click check button to assign a value`}
             <div className="manual-edit">
                 <label htmlFor="allow">Manual edit:</label>
                 <Checkbox onChange={(e) => setAllowEdit(e.checked)} checked={allowEdit} inputId="allow" />
             </div>
             <div className="button-value">
-                <InputText disabled={!allowEdit} value={value} onChange={(e) => setValue(e.target.value)} keyfilter="int" />
+                {
+                    allowEdit ?
+                    <InputText value={value} onChange={(e) => setValue(e.target.value)} keyfilter="int" />
+                    :
+                    <WebsocketInputText setAllowEdit={setAllowEdit} setValue={setValue} websocketValue={websocketValue} />
+                }
             </div>
             <div className="button-name">
                 <Dropdown editable placeholder="Button name" value={key} onChange={(e) => {setKey(e.value)}} options={button_names} />
