@@ -7,14 +7,13 @@ router = APIRouter()
 
 class SettingsModel(BaseModel):
     shunt_ohms: float
-    base_voltage: float
-    maximum_value: float
-    zero_level_offset: float
     buttons_tolerance: float
+    maximum_value: float
+    maximum_voltage: float
+    minimum_voltage: float
     long_press_time: float
     double_click_interval: float
     read_delay: float
-    base_value: float
 
 @router.get('/settings/')
 async def read_settings_endpoint() -> SettingsModel:

@@ -1,5 +1,5 @@
 from fastapi import APIRouter, WebSocket
-from ina_integration.utils import ina
+from keyboard.utils import keyboard
 from time import sleep
 
 router = APIRouter()
@@ -12,4 +12,4 @@ async def value_endpoint(websocket: WebSocket):
         if (data == 'close'):
             await websocket.close()
             return
-        await websocket.send_json(ina.get_value())
+        await websocket.send_json(keyboard.get_value())
