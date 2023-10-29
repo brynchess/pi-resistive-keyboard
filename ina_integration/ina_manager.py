@@ -6,8 +6,8 @@ import threading
 class Ina_Manager:
     def __init__(self) -> None:
         self.init = False
-        if (self.init is False):
-            self.configure()
+        self.value = 0
+        self.configure()
         pass
 
     def configure(self):
@@ -44,5 +44,4 @@ class Ina_Manager:
     
     def main_loop(self):
         while True:
-            time.sleep(1)
-            print(self.get_value())
+            pass

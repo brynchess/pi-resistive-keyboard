@@ -2,3 +2,4 @@ pi-ina219
 fastapi
 pynput
 uvicorn
+websockets

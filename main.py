@@ -3,12 +3,13 @@
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from endpoints import buttons_endpoint, settings_endpoint, functions_endpoint
+from endpoints import buttons_endpoint, settings_endpoint, functions_endpoint, websockets
 
 endpointsApp = FastAPI()
 endpointsApp.include_router(settings_endpoint.router)
 endpointsApp.include_router(buttons_endpoint.router)
 endpointsApp.include_router(functions_endpoint.router)
+endpointsApp.include_router(websockets.router)
 
 origins = [
     "http://localhost",
