@@ -8,10 +8,10 @@ const StatusButton = ({connectionStatus, onClick = () => null}) => {
         <Button icon="pi pi-check" severity="success" onClick={onClick} />
     )
     if (connectionStatus === "Connecting" || connectionStatus === "Closing") return (
-        <Button icon="pi pi-spin pi-spinner" disabled />
+        <Button icon="pi pi-spin pi-spinner" tooltip={connectionStatus} disabled />
     )
     if (connectionStatus === "Closed") return (
-        <Button icon="pi pi-times" severity="error" disabled />
+        <Button icon="pi pi-times" severity="error" tooltip="Error" disabled />
     )
 }
 
