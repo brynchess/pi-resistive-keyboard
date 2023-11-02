@@ -1,5 +1,5 @@
-// export const backend_url = "http://localhost:8000/"
-export const backend_url = "192.168.0.23:8000/"
+export const backend_url = "http://localhost:8000/"
+// export const backend_url = "192.168.0.23:8000/"
 export const http_url = `http://${backend_url}`
 export const websocket_url = `ws://${backend_url}`
 export const buttons_url = `${http_url}buttons/`
