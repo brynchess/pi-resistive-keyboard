@@ -23,7 +23,7 @@ const WebsocketInputText = ({websocketValue = "", setValue = () => null, setAllo
     }
     return (
         <div className="webs-input">
-            <InputText disabled value={websocketValue ? websocketValue : ""} />
+            <InputText disabled value={websocketValue ? Math.floor(websocketValue) : ""} placeholder="0" />
             <StatusButton connectionStatus={connectionStatus} onClick={handleClick} websocketValue={websocketValue} />
         </div>
     )

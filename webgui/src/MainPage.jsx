@@ -17,7 +17,7 @@ function MainPage () {
     ]
 
     return (
-        <Card header={<MainMenu pages={pages} activeIndex={activeIndex} setActiveIndex={setActiveIndex} />}>
+        <Card className="content-wrapper" header={<MainMenu pages={pages} activeIndex={activeIndex} setActiveIndex={setActiveIndex} />}>
             {pages[activeIndex]?.component}
         </Card>
     )
