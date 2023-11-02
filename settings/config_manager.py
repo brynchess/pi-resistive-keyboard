@@ -98,9 +98,7 @@ class ConfigManager:
         self.working_config.add_section("functions")
         for key, values in self.functions.items():
             value_str = " ".join(str(values[action]) for action in ["single", "double", "long"])
-            print(value_str)
             self.working_config["functions"][key] = value_str
-
     
     def clean_working_config(self):
         self.working_config = configparser.ConfigParser()

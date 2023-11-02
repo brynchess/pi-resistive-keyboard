@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from settings.utils import get_config
-from misc.utils import convert_dict_values_to_numbers
 from pydantic import BaseModel
+from utils import reload_configs
 
 router = APIRouter()
 
@@ -25,4 +25,5 @@ async def read_settings_endpoint() -> SettingsModel:
 async def update_settings_endpoint(patch_data: SettingsModel):
     config = get_config()
     response = config.set_options(patch_data)
+    reload_configs()
     return response.get_options()
