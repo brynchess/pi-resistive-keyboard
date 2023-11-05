@@ -12,6 +12,7 @@ function App() {
   const { showError, showInfo, showSuccess, showWarn } = useToast(toastRef)
   const [shouldConnect, setShouldConnect] = useState(false)
   const { lastJsonMessage:websocketValue = "", readyState, sendMessage } = useWebSocket(value_ws,{shouldReconnect: () => shouldConnect, heartbeat: {interval: 1000, message: "open"}},shouldConnect)
+  const [ touchScreenMode, setTouchScreenMode ] = useState(false)
 
   const sendCloseWebsocketMessage = () => {sendMessage("close")}
   
@@ -34,7 +35,9 @@ function App() {
         connectionStatus,
         websocketValue,
         setShouldConnect,
-        sendCloseWebsocketMessage
+        sendCloseWebsocketMessage,
+        touchScreenMode,
+        setTouchScreenMode
       }}>
         <MainPage />
       </MainContext.Provider>

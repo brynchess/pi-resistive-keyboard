@@ -9,6 +9,8 @@ export const MainContext = createContext(
         connectionStatus: "Closed",
         websocketValue: 0,
         setShouldConnect: () => Boolean,
-        sendCloseWebsocketMessage: () => null
+        sendCloseWebsocketMessage: () => null,
+        touchScreenMode: false,
+        setTouchScreenMode: () => null
     }
 )

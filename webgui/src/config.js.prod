@@ -5,4 +5,5 @@ export const buttons_url = `/buttons/`
 export const settings_url = `/settings/`
 export const key_options = `/key-options/`
 export const functions = `/functions/`
-export const value_ws = `/value`
+const currentURL = `${window.location.href}value`
+export const value_ws = currentURL.replace('http://', 'ws://')
