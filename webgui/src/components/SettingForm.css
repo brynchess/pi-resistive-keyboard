@@ -3,3 +3,25 @@
     flex-wrap: wrap;
     gap: 2em;
 }
+
+.settings-form-knob {
+    display: flex;
+    gap: 2em;
+    flex-wrap: wrap;
+}
+
+.settings-form-knob .p-float-label {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+}
+
+.settings-form-knob .p-float-label .p-knob {
+    position: relative !important;
+}
+
+.settings-form-knob .p-float-label label {
+    display: block;
+    text-align: center;
+    position: relative !important;
+}

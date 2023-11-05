@@ -1,9 +1,9 @@
-export const backend_url = "/"
+// export const backend_url = "/"
+export const backend_url = "192.168.0.23:8000/"
 export const http_url = `http://${backend_url}`
 export const websocket_url = `ws://${backend_url}`
-export const buttons_url = `/buttons/`
-export const settings_url = `/settings/`
-export const key_options = `/key-options/`
-export const functions = `/functions/`
-const currentURL = `${window.location.href}value/`
-export const value_ws = currentURL.replace('http://', 'ws://')
+export const buttons_url = `${http_url}buttons/`
+export const settings_url = `${http_url}settings/`
+export const key_options = `${http_url}key-options/`
+export const functions = `${http_url}functions/`
+export const value_ws = `${websocket_url}value`
