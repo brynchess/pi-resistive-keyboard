@@ -1,12 +1,18 @@
-import { Column } from "primereact/column";
-import { DataTable } from "primereact/datatable";
 import TouchScreenModeSwitch from "../../components/TouchScreenModeSwitch";
+import ConfigWizard from "../../components/ConfigWizard";
+import {Divider} from 'primereact/divider';
 
 function DashboardPage () {
 
     return (
         <div className="content">
-            <TouchScreenModeSwitch />
+            <div className="switches">
+                <TouchScreenModeSwitch />
+            </div>
+            <Divider />
+            <div className="wizard-button">
+                <ConfigWizard />
+            </div>
         </div>
     )
 }
