@@ -37,7 +37,9 @@ class KeyboardManager():
         self.long_press_time = float(options.get("long_press_time", 200))
         self.double_click_interval = float(options.get("double_click_interval", 40))
         self.read_delay = float(options.get("read_delay", 20))
+        self.descending_mode = options.get("descending_mode", False)
         self.min_trigger_value = self.calculate_lowest_trigger_value(self.buttons)
+        self.max_trigger_value = self.calculate_highest_trigger_value(self.buttons)
 
     def set_settingsmode_on(self):
         self.settings_mode = True
@@ -52,7 +54,7 @@ class KeyboardManager():
     
     def main_loop(self):
         while True:
-            if (self.value_is_over_min_trigger_value(self.get_value())):
+            if (self.value_meets_conditions(self.get_value())):
                 self.wait_to_avoid_rebound()
                 button = self.button_pressed()
                 if (button):
@@ -83,6 +85,14 @@ class KeyboardManager():
             
     def value_is_over_min_trigger_value(self, value):
         return value > self.min_trigger_value
+    
+    def value_is_below_max_trigger_value(self, value):
+        return value < self.max_trigger_value
+    
+    def value_meets_conditions(self, value):
+        if (self.descending_mode):
+            return self.value_is_below_max_trigger_value(value)
+        return self.value_is_over_min_trigger_value(value)
 
     def button_pressed(self):
         start_time = time.time()
@@ -141,3 +151,6 @@ class KeyboardManager():
     
     def calculate_lowest_trigger_value(self, buttons):
         return int(min(buttons.values(), key=lambda x: int(x)))-self.buttons_tolerance
+    
+    def calculate_highest_trigger_value(self, buttons):
+        return int(max(buttons.values(), key=lambda x: int(x)))+self.buttons_tolerance
