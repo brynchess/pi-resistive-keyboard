@@ -16,7 +16,16 @@ function VoltageRange ({ data, changeData = () => null, patchData = () => null }
         }
     }
 
+    const setHighestValue = () => {
+        if (!data.minimum_voltage || !voltageWebsocketValue) return null
+        if (data?.maximum_voltage < voltageWebsocketValue) {
+            changeData("maximum_voltage", voltageWebsocketValue)
+        }
+    }
+
     useEffect(() => {
+        changeData("maximum_voltage", 0)
+        changeData("minimum_voltage", 100)
         setVoltageShouldConnect(true)
         return () => handleClose()
     }
@@ -24,6 +33,7 @@ function VoltageRange ({ data, changeData = () => null, patchData = () => null }
 
     useEffect(() => {
         setLowestValue()
+        setHighestValue()
     },[voltageWebsocketValue])
 
     return (

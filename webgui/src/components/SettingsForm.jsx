@@ -64,10 +64,7 @@ function generateInputComponents(data, changeData, touchScreenMode) {
                 data={data}
                 label={key}
                 changeData={changeData}
-                tooltip={additionalInfo[key]?.tooltip ? additionalInfo[key].tooltip : false}
-                min={additionalInfo[key]?.min ? additionalInfo[key].min : false}
-                max={additionalInfo[key]?.max ? additionalInfo[key].max : false}
-                step={additionalInfo[key]?.step ? additionalInfo[key].step : false}
+                {...additionalInfo[key]}
             />
             :
             <InputNumWithLabel
@@ -75,9 +72,9 @@ function generateInputComponents(data, changeData, touchScreenMode) {
                 data={data}
                 label={key}
                 changeData={changeData}
-                tooltip={additionalInfo[key] ? additionalInfo[key].tooltip : false}
+                {...additionalInfo[key]}
             />
-    ));
+    ))
   
     return inputComponents;
   }

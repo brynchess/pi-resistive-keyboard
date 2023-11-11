@@ -12,8 +12,8 @@ function App() {
   const { showError, showInfo, showSuccess, showWarn } = useToast(toastRef)
   const [shouldConnect, setShouldConnect] = useState(false)
   const [voltageShouldConnect, setVoltageShouldConnect] = useState(false)
-  const { lastJsonMessage:websocketValue = "", readyState, sendMessage } = useWebSocket(value_ws,{shouldReconnect: () => shouldConnect, heartbeat: {interval: 1000, message: "open"}},shouldConnect)
-  const { lastJsonMessage:voltageWebsocketValue = "", readyState: voltageReadyState, sendMessage: voltageSendMessage } = useWebSocket(voltage_ws,{shouldReconnect: () => voltageShouldConnect, heartbeat: {interval: 1000, message: "open"}},voltageShouldConnect)
+  const { lastJsonMessage:websocketValue = "", readyState, sendMessage } = useWebSocket(value_ws,{shouldReconnect: () => shouldConnect, heartbeat: {interval: 200, message: "open"}},shouldConnect)
+  const { lastJsonMessage:voltageWebsocketValue = "", readyState: voltageReadyState, sendMessage: voltageSendMessage } = useWebSocket(voltage_ws,{shouldReconnect: () => voltageShouldConnect, heartbeat: {interval: 200, message: "open"}},voltageShouldConnect)
   const [ touchScreenMode, setTouchScreenMode ] = useState(false)
 
   const sendCloseWebsocketMessage = () => {sendMessage("close")}

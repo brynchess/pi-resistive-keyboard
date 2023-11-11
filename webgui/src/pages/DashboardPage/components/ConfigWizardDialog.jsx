@@ -4,18 +4,33 @@ import { Steps } from "primereact/steps";
 import { useState } from "react";
 import useSettingsEndpoint from "../../../hooks/useSettingsEndpoint";
 import VoltageRange from "./pages/VoltageRange";
+import SaveConfig from "./pages/SaveConfig";
 
+const NextButton = ({activeStep, pages, SaveButton, onHide, handleClick}) => {
+    if (activeStep >= pages?.length-1) return <SaveButton onSave={onHide} />
+    return <Button label="Next" icon="pi pi-chevron-right" onClick={() => handleClick("next")} />
+}
 
+const PrevButton = ({activeStep, handleClick}) => <Button icon="pi pi-chevron-left" disabled={activeStep <= 0} onClick={() => handleClick("previous")} />
+
+const Footer = (props) => {   
+    return (
+        <>
+        <PrevButton {...props} />
+        <NextButton {...props} />
+        </>
+    )
+}
 
 function ConfigWizardDialog({ visible = false, onHide = () => null}) {
     const [activeStep, setActiveStep] = useState(0)
     const onSelect = (e) => {setActiveStep(e.index)}
-    const { data, changeData, patchData } = useSettingsEndpoint()
-    const pageProps = { data, changeData, patchData }
+    const { data, changeData, patchData, changedValues, SaveButton } = useSettingsEndpoint()
+    const pageProps = { data, changeData, patchData, changedValues }
 
     const pages = [
         {
-            title: 'Welcome',
+            label: 'Start',
             component: <>Welcome to the configuration and calibration wizard</>,
             command: () => null
         },
@@ -24,11 +39,9 @@ function ConfigWizardDialog({ visible = false, onHide = () => null}) {
             component: <VoltageRange {...pageProps} />
         },
         {
-            label: 'Read delay'
-        },
-        {
-            label: 'Maximum value'
-        },
+            label: 'Save config',
+            component: <SaveConfig {...pageProps} />
+        }
     ]
 
     const handleClick = (action = "next") => {
@@ -42,14 +55,10 @@ function ConfigWizardDialog({ visible = false, onHide = () => null}) {
         })
     }
 
-    const NextButton = () => <Button label="Next" icon="pi pi-chevron-right" disabled={activeStep >= pages?.length-1} onClick={() => handleClick("next")} />
-    const PrevButton = () => <Button icon="pi pi-chevron-left" disabled={activeStep <= 0} onClick={() => handleClick("previous")} />
-
-    const Footer = () => <><PrevButton /><NextButton /></>
 
     return (
             visible ?
-            <Dialog header={<Steps model={pages} activeIndex={activeStep} onSelect={onSelect} />} footer={<Footer />} visible={visible} onHide={onHide}>
+            <Dialog header={<Steps model={pages} activeIndex={activeStep} onSelect={onSelect} />} footer={<Footer activeStep={activeStep} pages={pages} SaveButton={SaveButton} onHide={onHide} handleClick={handleClick} />} visible={visible} onHide={onHide} maximizable>
                 {pages[activeStep]?.component}
             </Dialog> :
             <></>
