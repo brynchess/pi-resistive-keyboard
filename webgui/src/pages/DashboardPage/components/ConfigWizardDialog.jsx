@@ -2,10 +2,16 @@ import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { Steps } from "primereact/steps";
 import { useState } from "react";
+import useSettingsEndpoint from "../../../hooks/useSettingsEndpoint";
+import VoltageRange from "./pages/VoltageRange";
+
+
 
 function ConfigWizardDialog({ visible = false, onHide = () => null}) {
     const [activeStep, setActiveStep] = useState(0)
     const onSelect = (e) => {setActiveStep(e.index)}
+    const { data, changeData, patchData } = useSettingsEndpoint()
+    const pageProps = { data, changeData, patchData }
 
     const pages = [
         {
@@ -15,7 +21,7 @@ function ConfigWizardDialog({ visible = false, onHide = () => null}) {
         },
         {
             label: 'Voltage range',
-            component: <>Press every button on your steering wheel, one by one, then click Next</>
+            component: <VoltageRange {...pageProps} />
         },
         {
             label: 'Read delay'

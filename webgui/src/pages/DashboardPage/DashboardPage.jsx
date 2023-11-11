@@ -1,5 +1,5 @@
 import TouchScreenModeSwitch from "../../components/TouchScreenModeSwitch";
-import ConfigWizard from "../../components/ConfigWizard";
+import ConfigWizard from "./components/ConfigWizard";
 import {Divider} from 'primereact/divider';
 
 function DashboardPage () {
