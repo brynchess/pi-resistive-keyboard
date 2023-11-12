@@ -1,7 +1,8 @@
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Toolbar } from 'primereact/toolbar';
+import { Message } from "primereact/message";
 import ChangeValueDialog from "./components/ChangeValueDialog";
 import ActionButtons from "./components/ActionButtons";
 import useButtonsEndpoint from "../../hooks/useButtonsEndpoint";
@@ -14,6 +15,7 @@ function AddButtonsPage() {
     const [currentRowData, setCurrentRowData] = useState()
     const [currentRowDetails, setCurrentRowDetails] = useState()
     const {setShouldConnect, websocketValue, sendCloseWebsocketMessage} = useContext(MainContext)
+    const [isChanged, setIsChanged] = useState(false)
 
     const handleEdit = (rowData, rowDetails) => {
         setDialogOpen(true);
@@ -29,10 +31,16 @@ function AddButtonsPage() {
 
     return (
         <>
+            <div className="add-button-messages">
+                {isChanged && <Message severity="warn" text="Remember to save changes before exit" />}
+            </div>
             <DataTable value={data} loading={isLoading}>
                 <Column header="Value" field="value" />
                 <Column header="Button" field="key" />
-                <Column header="Actions" body={(rowData, rowDetails) => <ActionButtons rowData={rowData} rowDetails={rowDetails} onEdit={() => {handleEdit(rowData, rowDetails)}} onRemove={removeButton} />} />
+                <Column header="Actions" body={(rowData, rowDetails) => <ActionButtons rowData={rowData} rowDetails={rowDetails} onEdit={() => {
+                    handleEdit(rowData, rowDetails)
+                    setIsChanged(true)
+                    }} onRemove={removeButton} />} />
             </DataTable>
             <Toolbar
                 start={
@@ -40,8 +48,8 @@ function AddButtonsPage() {
                 }
                 end={
                     <div className="toolbar-buttons">
-                        <SaveButton />
-                        <UndoButton />
+                        <SaveButton onClick={() => setIsChanged(false)} />
+                        <UndoButton onClick={() => setIsChanged(false)} />
                     </div>
                     
                 }

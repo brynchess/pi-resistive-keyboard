@@ -56,6 +56,15 @@ class ConfigManager:
         self.save_config()
         return self
     
+    def zero_buttons_values(self):
+        buttons_dict = {}
+        for item in self.buttons:
+            key = item["key"]
+            buttons_dict[key] = -1000
+        self.buttons_dict = buttons_dict
+        self.save_config()
+        return self
+    
     def set_functions(self, functions):
         self.functions_dict = {}
         self.functions = {}

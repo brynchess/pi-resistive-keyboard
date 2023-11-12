@@ -8,8 +8,11 @@ export const MainContext = createContext(
         showSuccess: () => null,
         connectionStatus: "Closed",
         websocketValue: 0,
-        setShouldConnect: () => Boolean,
+        setShouldConnect: () => null,
         sendCloseWebsocketMessage: () => null,
+        voltageWebsocketValue: "",
+        setVoltageShouldConnect: () => null,
+        voltageSendCloseWebsocketMessage: () => null,
         touchScreenMode: false,
         setTouchScreenMode: () => null
     }

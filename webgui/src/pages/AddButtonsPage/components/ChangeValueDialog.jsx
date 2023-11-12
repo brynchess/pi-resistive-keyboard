@@ -49,7 +49,7 @@ const ChangeValueDialog = ({ onOpen = () => null, onClose = () => null, visible 
         <Dialog
             header={`Change value of ${currentRowData?.key?.toLowerCase()} button`} visible={visible} onHide={onHide}
             footer={
-                <Button icon="pi pi-save" label="Save" onClick={() => {
+                <Button icon="pi pi-save" label="Set" onClick={() => {
                     onHide();
                     changeButton(currentRowDetails?.rowIndex, { key, value });
                 }} />

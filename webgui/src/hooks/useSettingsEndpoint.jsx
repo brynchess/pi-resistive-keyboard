@@ -19,6 +19,8 @@ function useSettingsEndpoint() {
         base_value: 0,
     })
 
+    const [changedValues, setChangedValues] = useState({})
+
     const { showError, showSuccess } = useContext(MainContext);
 
     const fetchData = () => {
@@ -41,6 +43,7 @@ function useSettingsEndpoint() {
             .then(response => {
                 if (response !== -1) {
                     setData(response)
+                    setChangedValues({})
                 }
                 setIsLoading(false)
             })
@@ -75,6 +78,7 @@ function useSettingsEndpoint() {
                 if (response !== -1) {
                     showSuccess("Changes successfully saved")
                     setData(response)
+                    setChangedValues({})
                 }
                 setIsLoading(false)
             })
@@ -88,17 +92,23 @@ function useSettingsEndpoint() {
         setData(prevState => (
             { ...prevState, [field]: value }
         ))
+        setChangedValues(prevState => (
+            { ...prevState, [field]: value }
+        ))
     }
 
-    const SaveButton = () => (
-        <Button label="Save" icon="pi pi-save" onClick={patchData} />
+    const SaveButton = ({onSave = () => null}) => (
+        <Button label="Save" icon="pi pi-save" onClick={() => {
+            patchData()
+            onSave()
+        }} />
     )
 
     const UndoButton = () => (
         <Button label="Undo changes" icon="pi pi-undo" severity="info" onClick={fetchData} />
     )
 
-    return { isLoading, error, data, refetchData: fetchData, patchData, changeData, SaveButton, UndoButton }
+    return { isLoading, error, data, refetchData: fetchData, patchData, changeData, SaveButton, UndoButton, changedValues }
 }
 
 export default useSettingsEndpoint;

@@ -21,3 +21,10 @@ async def update_config_endpoint(item: Item):
     response = config.set_buttons(item.item)
     reload_configs()
     return response.get_buttons()
+
+@router.delete('/buttons/')
+async def zero_buttons_endpoint():
+    config = get_config()
+    response = config.zero_buttons_values()
+    reload_configs()
+    return response.get_buttons()

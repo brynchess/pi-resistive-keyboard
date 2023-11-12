@@ -7,3 +7,4 @@ export const settings_url = `${http_url}settings/`
 export const key_options = `${http_url}key-options/`
 export const functions = `${http_url}functions/`
 export const value_ws = `${websocket_url}value`
+export const voltage_ws = `${websocket_url}voltage`
