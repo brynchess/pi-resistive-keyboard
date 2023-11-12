@@ -1,7 +1,9 @@
 import configparser
+import os
 
 class ConfigManager:
     CONFIG_URL = "./config.ini"
+    EXAMPLE_CONFIG_URL = "./example_config.ini"
 
     def __init__(self) -> None:
         self.working_config = configparser.ConfigParser()
@@ -11,7 +13,10 @@ class ConfigManager:
 
     def import_config(self):
         self.config = configparser.ConfigParser()
-        self.config.read(self.CONFIG_URL)
+        if os.path.exists(self.CONFIG_URL):
+            self.config.read(self.CONFIG_URL)
+        else:
+            self.config.read(self.EXAMPLE_CONFIG_URL)
         self.functions = {}
         if self.config.has_section("options"):
             self.options = dict(self.config.items("options"))
