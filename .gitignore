@@ -26,3 +26,4 @@ __pycache__/
 __pycache__/*
 bitbucket
 build/
+.venv
