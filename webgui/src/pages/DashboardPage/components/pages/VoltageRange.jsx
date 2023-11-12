@@ -46,6 +46,7 @@ function VoltageRange ({ data, changeData = () => null, patchData = () => null }
                 {
                     <InputText disabled={true} value={voltageWebsocketValue} />
                 }
+                <div className="range">{`${data.minimum_voltage}-${data.maximum_voltage}`}</div>
             </div>
             </> :
             <>

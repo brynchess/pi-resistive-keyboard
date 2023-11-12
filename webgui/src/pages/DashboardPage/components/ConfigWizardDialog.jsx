@@ -5,9 +5,15 @@ import { useState } from "react";
 import useSettingsEndpoint from "../../../hooks/useSettingsEndpoint";
 import VoltageRange from "./pages/VoltageRange";
 import SaveConfig from "./pages/SaveConfig";
+import useButtonsEndpoint from "../../../hooks/useButtonsEndpoint";
 
-const NextButton = ({activeStep, pages, SaveButton, onHide, handleClick}) => {
-    if (activeStep >= pages?.length-1) return <SaveButton onSave={onHide} />
+const NextButton = ({activeStep, pages, SaveButton, onHide = () => null, handleClick = () => null}) => {
+    const {zeroData} = useButtonsEndpoint()
+    const handleSave = () => {
+        onHide()
+        zeroData()
+    }
+    if (activeStep >= pages?.length-1) return <SaveButton onSave={handleSave} />
     return <Button label="Next" icon="pi pi-chevron-right" onClick={() => handleClick("next")} />
 }
 

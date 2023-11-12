@@ -1,22 +1,6 @@
 import { useEffect, useState } from "react"
-
-function validate(changedValues) {
-    const errors = []
-    let valid = true
-    if (is_minimum_voltage_higher_than_maximum(changedValues)) {
-        errors.push("Voltage range is not set. Maybe something is not right with connection of INA and your steering wheel?")
-        valid = false
-    }
-    return {
-        valid,
-        errors
-    }
-}
-
-function is_minimum_voltage_higher_than_maximum(changedValues) {
-    const { maximum_voltage, minimum_voltage } = changedValues
-    return maximum_voltage < minimum_voltage
-}
+import { validate } from "../utils/validate"
+import { Message } from 'primereact/message';
 
 function ChangedValues({ changedValues = {} }) {
 
@@ -48,7 +32,14 @@ function SaveConfig({ changedValues = {} }) {
         <div className="wizard-page">
             {valid ?
                 <ChangedValues changedValues={changedValues} /> :
-                errors}
+                errors.map((error, index) => {
+                    return (
+                        <Message text={`ERROR: ${error}`} severity="error" key={index} />
+                    )
+                })}
+            <div className="wizard-warning">
+                <Message severity="warn" text="Saving the wizard settings will result in the removal of all values assigned to the buttons. You will retain the assigned functions, but you will need to set the values again." />
+            </div>
         </div>
     )
 }

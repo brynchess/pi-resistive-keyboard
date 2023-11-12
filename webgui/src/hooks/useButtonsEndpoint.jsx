@@ -73,6 +73,38 @@ function useButtonsEndpoint() {
             })
     }
 
+    const zeroData = () => {
+        const request = {
+            method: "DELETE",
+            headers: {
+                'Content-type': `application/json`
+            }
+        }
+        setIsLoading(true)
+        fetch(buttons_url, request)
+            .then(response => {
+                if (response.ok) {
+                    return response.json()
+                }
+                else {
+                    throw Error(response.error)
+                }
+            })
+            .catch(error => {
+                setError(error)
+                showError(error.message)
+                setIsLoading(false)
+                return -1
+            })
+            .then(response => {
+                if (response !== -1) {
+                    showSuccess("The button values have been reset to zero")
+                    setData(response)
+                }
+                setIsLoading(false)
+            })
+    }
+
     useEffect(() => {
         fetchData()
     }, [])
@@ -89,19 +121,25 @@ function useButtonsEndpoint() {
         setData((prevState) => (change_element(prevState, index, buttonData)))
     }
 
-    const SaveButton = () => (
-        <Button label="Save" icon="pi pi-save" onClick={patchData} />
+    const SaveButton = ({onClick = () => null}) => (
+        <Button label="Save" icon="pi pi-save" onClick={() => {
+            patchData()
+            onClick()
+        }} />
     )
 
-    const UndoButton = () => (
-        <Button label="Undo changes" icon="pi pi-undo" severity="info" onClick={fetchData} />
+    const UndoButton = ({onClick = () => null}) => (
+        <Button label="Undo changes" icon="pi pi-undo" severity="info" onClick={() => {
+            fetchData()
+            onClick()
+        }} />
     )
 
     const AddButton = () => (
         <Button label="Add" icon="pi pi-plus" severity="success" onClick={addButton} />
     )
 
-    return { isLoading, error, data, addButton, removeButton, refetchData: fetchData, changeButton, patchData, SaveButton, UndoButton, AddButton }
+    return { isLoading, error, data, addButton, removeButton, refetchData: fetchData, zeroData, changeButton, patchData, SaveButton, UndoButton, AddButton }
 }
 
 export default useButtonsEndpoint;
