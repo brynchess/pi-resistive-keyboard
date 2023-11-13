@@ -14,6 +14,7 @@ class SettingsModel(BaseModel):
     long_press_time: float
     double_click_interval: float
     read_delay: float
+    descending_mode: bool
 
 @router.get('/settings/')
 async def read_settings_endpoint() -> SettingsModel:

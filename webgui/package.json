@@ -1,7 +1,7 @@
 {
-  "name": "webgui",
+  "name": "pi-resistive-keyboard",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1b",
   "type": "module",
   "scripts": {
     "dev": "vite",
