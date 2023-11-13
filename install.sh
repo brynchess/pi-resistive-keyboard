@@ -22,6 +22,6 @@ python3 -m venv "$target_dir"/venv
 
 # Step 4: Install dependencies from requirements.txt in the virtual environment
 echo "Installing dependencies..."
-"$target_dir"/venv/bin/pip install -r "$target_dir"/repo-main/requirements.txt
+"$target_dir"/venv/bin/pip install -r "$target_dir"/pi-resistive-keyboard/requirements.txt
 
 echo "Script completed successfully."
