@@ -1,11 +1,14 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import InputNumWithLabel from "./InputNumWithLabel";
 import './SettingForm.css';
 import KnobNumWithLabel from "./KnobWithLabel";
 import { MainContext } from "../../context/MainContext";
 
-function generateInputComponents(data, changeData, touchScreenMode) {
+function have_options (additionalInfo, key) {
+    return additionalInfo[key]?.options
+}
 
+function generateInputComponents(data, changeData, touchScreenMode) {
     const additionalInfo = {
         "shunt_ohms": {
             tooltip: "Value of shunt resistor used in your module (eg. R100 = 0.1).",
@@ -55,10 +58,17 @@ function generateInputComponents(data, changeData, touchScreenMode) {
             max: 1,
             step: 0.1
         },
+        "descending_mode": {
+            tooltip: "Set true if your base voltage is higher that the voltage after pressing a button",
+            options: [
+                {value: true, label: "True"},
+                {value: false, label: "False"}
+            ]
+        }
     }
 
     const inputComponents = Object.keys(data).map((key) => (
-        touchScreenMode ?
+        touchScreenMode && !have_options(additionalInfo, key) ?
             <KnobNumWithLabel
                 key={key}
                 data={data}
