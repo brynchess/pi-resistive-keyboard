@@ -10,7 +10,7 @@ def download_and_extract_zip(repo_url, release_tag, target_directory):
     os.makedirs(temp_dir, exist_ok=True)
 
     # Construct the URL for the release zip file
-    zip_url = f"{repo_url}/archive/{release_tag}.zip"
+    zip_url = f"{repo_url}/releases/download/{release_tag}/pi-resistive-keyboard.zip"
 
     # Download the zip file
     response = requests.get(zip_url)
@@ -42,7 +42,7 @@ def download_and_extract_zip(repo_url, release_tag, target_directory):
 if __name__ == "__main__":
     # GitHub repository information
     repo_url = "https://github.com/brynchess/pi-resistive-keyboard"
-    release_tag = "v0.0.1c"  # Change this to the desired release tag
+    release_tag = "v0.0.1c"
 
     # Target directory for the update
     target_directory = os.path.expanduser(".")
