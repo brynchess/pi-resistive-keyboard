@@ -4,9 +4,10 @@ import { Column } from "primereact/column";
 import { InputText } from "primereact/inputtext";
 import { Toolbar } from "primereact/toolbar";
 import { ToggleButton } from 'primereact/togglebutton';
+import { Button } from "primereact/button";
 
 function OAAppsManagerPage () {
-    const {data, isLoading, SaveButton, UndoButton} = useOAAppsEndpoint()
+    const {data, isLoading, SaveButton, UndoButton, AddButton, removeApp} = useOAAppsEndpoint()
     const editor = (options) => <InputText value={options.value} onChange={(e) => options.editorCallback(e.target.value)} />
     const booleanEditor = (options) => <ToggleButton checked={options.value} onChange={(e) => options.editorCallback(e.value)} />
     const columns = [
@@ -15,6 +16,7 @@ function OAAppsManagerPage () {
         {header: "IconPath", field: "IconPath", editor},
         {header: "Arguments", field: "Arguments", editor},
         {header: "Autostart", field: "Autostart", editor: booleanEditor},
+        {header: "Actions", body: (rowData, rowDetails) => <Button severity="danger" icon="pi pi-trash" onClick={() => {removeApp(rowDetails.index)}} />}
     ]
     return (
         <div className="content">
@@ -23,7 +25,11 @@ function OAAppsManagerPage () {
                     <Column key={index} {...column} />
                 )}
             </DataTable>
-            <Toolbar end={
+            <Toolbar 
+            start={
+                <AddButton />
+            }
+            end={
                 <div className="toolbar-buttons">
                     <SaveButton />
                     <UndoButton />

@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { apps_url } from "../config";
 import { MainContext } from "../../context/MainContext";
 import { Button } from "primereact/button";
+import { trash_element } from "../tools/trash_element";
 
 
 function useOAAppsEndpoint() {
@@ -74,6 +75,14 @@ function useOAAppsEndpoint() {
         fetchData()
     }, [])
 
+    const addApp = () => {
+        setData((prevState) => ([...prevState, { Name: "", Path: 0, IconPath: "", Arguments: "", Autostart: false }]))
+    }
+
+    const removeApp = (index) => {
+        setData((prevState) => (trash_element(prevState, index)))
+    }
+
     const SaveButton = ({onSave = () => null}) => (
         <Button label="Save" icon="pi pi-save" onClick={() => {
             patchData()
@@ -85,7 +94,11 @@ function useOAAppsEndpoint() {
         <Button label="Undo changes" icon="pi pi-undo" severity="info" onClick={fetchData} />
     )
 
-    return { isLoading, error, data, refetchData: fetchData, patchData, SaveButton, UndoButton }
+    const AddButton = () => (
+        <Button label="Add" icon="pi pi-plus" severity="success" onClick={addApp} />
+    )
+
+    return { isLoading, error, data, refetchData: fetchData, patchData, SaveButton, UndoButton, AddButton, removeApp }
 }
 
 export default useOAAppsEndpoint;
