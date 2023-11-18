@@ -4,6 +4,14 @@ import configparser
 class External_Apps_Manager:
     CONFIG_URL = "/home/pi/.openauto/config/openauto_applications.ini"
     EXAMPLE_CONFIG_URL = "./default_cfgs/example_openauto_applications.ini"
+    APP_NAME = "Resistive Keyboard"
+    THIS_APP = {
+        "Name": APP_NAME,
+        "Path": "/home/pi/Scripts/launch.sh",
+        "Icon": "",
+        "Arguments": "",
+        "Autostart": "True"
+    }
 
     def __init__(self) -> None:
         self.reset_working_config()
@@ -23,7 +31,7 @@ class External_Apps_Manager:
     
     def import_applications(self):
         config = self.config
-        for section in config.sections():
+        for i, section in enumerate(config.sections()):
             if section.startswith('Application_'):
                 app_info = {
                     'Name': config.get(section, 'Name', fallback=''),
@@ -33,6 +41,7 @@ class External_Apps_Manager:
                     'Autostart': config.getboolean(section, 'Autostart', fallback=False),
                 }
                 self.applications.append(app_info)
+            self.count = i
 
     def get_applications(self):
         self.import_config()
@@ -70,3 +79,21 @@ class External_Apps_Manager:
         
     def reset_working_config(self):
         self.working_config = configparser.ConfigParser()
+
+    def check_application_existence(self, application_name):
+        for section in self.config.sections():
+            if section.startswith('Application_'):
+                return self.config.get(section, 'Name', fallback='') == application_name
+        return False
+    
+    def add_app(self, app_info):
+        self.applications.append(app_info)
+        self.set_applications(self.applications)
+        print("")
+
+    def install_this_app(self):
+        if self.check_application_existence(self.APP_NAME):
+            print("App is already installed")
+            return
+        self.add_app(self.THIS_APP)
+        print("Success")
