@@ -1,11 +1,12 @@
 from fastapi import FastAPI, staticfiles
 from fastapi.middleware.cors import CORSMiddleware
-from endpoints import buttons_endpoint, settings_endpoint, functions_endpoint, websockets
+from endpoints import buttons_endpoint, settings_endpoint, functions_endpoint, oaapps_endpoint, websockets
 
 endpointsApp = FastAPI()
 endpointsApp.include_router(settings_endpoint.router)
 endpointsApp.include_router(buttons_endpoint.router)
 endpointsApp.include_router(functions_endpoint.router)
+endpointsApp.include_router(oaapps_endpoint.router)
 endpointsApp.include_router(websockets.router)
 endpointsApp.mount("/", staticfiles.StaticFiles(directory='build', html='true'), name='static')
 origins = [

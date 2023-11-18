@@ -3,7 +3,7 @@ import os
 
 class ConfigManager:
     CONFIG_URL = "./config.ini"
-    EXAMPLE_CONFIG_URL = "./example_config.ini"
+    EXAMPLE_CONFIG_URL = "./default_cfgs/example_config.ini"
 
     def __init__(self) -> None:
         self.working_config = configparser.ConfigParser()
