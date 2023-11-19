@@ -11,12 +11,12 @@ function OAAppsManagerPage () {
     const editor = (options) => <InputText value={options.value} onChange={(e) => options.editorCallback(e.target.value)} />
     const booleanEditor = (options) => <ToggleButton checked={options.value} onChange={(e) => options.editorCallback(e.value)} />
     const columns = [
-        {header: "Name", field: "Name", editor},
-        {header: "Path", field: "Path", editor},
-        {header: "IconPath", field: "IconPath", editor},
-        {header: "Arguments", field: "Arguments", editor},
-        {header: "Autostart", field: "Autostart", editor: booleanEditor},
-        {header: "Actions", body: (rowData, rowDetails) => <Button severity="danger" icon="pi pi-trash" onClick={() => {removeApp(rowDetails.index)}} />}
+        { header: "Name", field: "Name", editor },
+        { header: "Path", field: "Path", editor },
+        { header: "IconPath", field: "IconPath", editor },
+        { header: "Arguments", field: "Arguments", editor },
+        { header: "Autostart", field: "Autostart", editor: booleanEditor },
+        { header: "Actions", body: (rowData, rowDetails) => <Button severity="danger" icon="pi pi-trash" onClick={() => { removeApp(rowDetails.rowIndex) }} /> }
     ]
     return (
         <div className="content">
