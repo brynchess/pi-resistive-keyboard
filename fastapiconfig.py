@@ -9,7 +9,7 @@ endpointsApp.include_router(functions_endpoint.router)
 endpointsApp.include_router(oaapps_endpoint.router)
 endpointsApp.include_router(update_endpoint.router)
 endpointsApp.include_router(websockets.router)
-endpointsApp.mount("/", staticfiles.StaticFiles(directory='build', html='true'), name='static')
+endpointsApp.mount("/", staticfiles.StaticFiles(directory='dist', html='true'), name='static')
 origins = [
     "http://localhost",
     "http://127.0.0.1",
