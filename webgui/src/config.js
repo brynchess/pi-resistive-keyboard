@@ -9,6 +9,7 @@ export const key_options = `${http_url}key-options/`
 export const functions = `${http_url}functions/`
 export const apps_url = `${http_url}apps/`
 export const install_url = `${http_url}install/`
+export const update_url = `${http_url}update/`
 
 //websocks
 export const value_ws = `${websocket_url}value`
