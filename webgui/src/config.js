@@ -1,8 +1,7 @@
-//urls
-export const backend_url = import.meta.env.VITE_BACKEND_URL
-console.log(backend_url)
-export const http_url = `http://${backend_url}`
-export const websocket_url = `ws://${backend_url}`
+import { get_ws_address } from "./tools/get_ws_address"
+
+export const http_url = import.meta.env.VITE_BACKEND_URL
+export const websocket_url = get_ws_address()
 export const buttons_url = `${http_url}buttons/`
 export const settings_url = `${http_url}settings/`
 export const key_options = `${http_url}key-options/`
