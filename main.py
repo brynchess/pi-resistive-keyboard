@@ -1,14 +1,17 @@
 #to run headless on devrpi
 #DISPLAY=":0" .venv/bin/python3 main.py
 import requests
+import webbrowser
 
-URL = "http://localhost:8000/settings/"
+SETTINGS_URL = "http://localhost:8000/settings/"
+BASE_URL = "http://localhost:8000/"
 
 def app_is_down():
     try:
-        response = requests.get(URL)
+        response = requests.get(SETTINGS_URL)
         if response.status_code == 200:
-            print("ERROR: App is already running")
+            print("ERROR: App is already running, opening config page")
+            webbrowser.open(BASE_URL)
             return False
     except requests.exceptions.RequestException as e:
             print("INFO: Running the app...")
