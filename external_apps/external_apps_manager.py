@@ -8,7 +8,7 @@ class External_Apps_Manager:
     THIS_APP = {
         "Name": APP_NAME,
         "Path": "/home/pi/Scripts/launch.sh",
-        "Icon": "",
+        "IconPath": "",
         "Arguments": "",
         "Autostart": "True"
     }
@@ -83,13 +83,16 @@ class External_Apps_Manager:
     def check_application_existence(self, application_name):
         for section in self.config.sections():
             if section.startswith('Application_'):
-                return self.config.get(section, 'Name', fallback='') == application_name
+                if self.config.get(section, 'Name', fallback='') == application_name:
+                    return True
         return False
     
     def add_app(self, app_info):
         self.applications.append(app_info)
         self.set_applications(self.applications)
-        print("")
+
+    def is_this_app_installed(self):
+        return self.check_application_existence(self.APP_NAME)
 
     def install_this_app(self):
         if self.check_application_existence(self.APP_NAME):
@@ -97,3 +100,4 @@ class External_Apps_Manager:
             return
         self.add_app(self.THIS_APP)
         print("Success")
+        return True
