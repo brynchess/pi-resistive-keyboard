@@ -1,5 +1,4 @@
 //urls
-// export const backend_url = "/"
 export const backend_url = import.meta.env.VITE_BACKEND_URL
 console.log(backend_url)
 export const http_url = `http://${backend_url}`
