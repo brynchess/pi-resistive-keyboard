@@ -8,6 +8,8 @@ class ConfigManager:
     def __init__(self) -> None:
         self.working_config = configparser.ConfigParser()
         self.buttons = []
+        self.options = {}
+        self.buttons_dict = {}
         self.import_config()
         pass
 
