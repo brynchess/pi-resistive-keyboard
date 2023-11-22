@@ -4,7 +4,7 @@
 app_name=pi-resistive-keyboard
 
 # Set the repository URL
-repo_url="https://github.com/brynchess/pi-resistive-keyboard/releases/download/v0.0.1b/"$app_name".zip"
+repo_url="https://github.com/brynchess/pi-resistive-keyboard/releases/download/v0.0.1d/"$app_name".zip"
 
 # Set the target directory
 target_dir=~/Scripts
