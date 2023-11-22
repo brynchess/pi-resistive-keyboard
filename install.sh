@@ -27,4 +27,6 @@ python3 -m venv "$target_dir"/"$app_name"/venv
 echo "Installing dependencies..."
 "$target_dir"/"$app_name"/venv/bin/pip install -r "$target_dir"/"$app_name"/requirements.txt
 
+chmod +x "$target_dir"/"$app_name"/launcher.sh
+
 echo "Script completed successfully."
