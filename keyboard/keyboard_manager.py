@@ -8,10 +8,6 @@ from pynput.keyboard import Controller
 class KeyboardManager():
     def __init__(self) -> None:
         self.configure()
-        self.__destructor_event = threading.Event()
-        
-    def __del__(self):
-        self.__destructor_event.set()
 
     def configure(self):
         print("INFO: KeyboardManager init...")
@@ -62,9 +58,6 @@ class KeyboardManager():
                     function_id = self.get_key_function_id(button, action_type)
                     self.dispatch_button_function(function_id)
                     self.cooldown_after_double_click(action_type)
-            if (self.__destructor_event.is_set()):
-                print("INFO: Main thread is dead")
-                break
 
     def cooldown_after_double_click(self, action_type):
         if (action_type == "double"):
@@ -150,7 +143,12 @@ class KeyboardManager():
         return None
     
     def calculate_lowest_trigger_value(self, buttons):
-        return int(min(buttons.values(), key=lambda x: int(x)))-self.buttons_tolerance
+        if buttons:
+            return int(min(buttons.values(), key=lambda x: int(x)))-self.buttons_tolerance
+        return 100000
     
     def calculate_highest_trigger_value(self, buttons):
-        return int(max(buttons.values(), key=lambda x: int(x)))+self.buttons_tolerance
+        if buttons:
+            return int(max(buttons.values(), key=lambda x: int(x)))+self.buttons_tolerance
+        return 100000
+        

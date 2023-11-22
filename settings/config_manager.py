@@ -8,6 +8,8 @@ class ConfigManager:
     def __init__(self) -> None:
         self.working_config = configparser.ConfigParser()
         self.buttons = []
+        self.options = {}
+        self.buttons_dict = {}
         self.import_config()
         pass
 
@@ -17,6 +19,7 @@ class ConfigManager:
             self.config.read(self.CONFIG_URL)
         else:
             self.config.read(self.EXAMPLE_CONFIG_URL)
+            example_config = True
         self.functions = {}
         if self.config.has_section("options"):
             self.options = dict(self.config.items("options"))
@@ -28,6 +31,8 @@ class ConfigManager:
             for key, value in self.config.items("functions"):
                 single, double, long = map(int, value.split())
                 self.functions[key] = {"single": single, "double": double, "long": long}
+        if example_config:
+            self.save_config()        
         return self
 
     def get_options(self):
