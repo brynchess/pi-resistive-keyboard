@@ -4,7 +4,7 @@
 app_name=pi-resistive-keyboard
 
 # Set the repository URL
-repo_url="https://github.com/brynchess/pi-resistive-keyboard/releases/download/v0.0.1b/"$app_name".zip"
+repo_url="https://github.com/brynchess/pi-resistive-keyboard/releases/download/v0.0.1d/"$app_name".zip"
 
 # Set the target directory
 target_dir=~/Scripts
@@ -24,7 +24,11 @@ echo "Creating a virtual environment..."
 python3 -m venv "$target_dir"/"$app_name"/venv
 
 # Step 4: Install dependencies from requirements.txt in the virtual environment
+echo "Installing new version of pip..."
+"$target_dir"/"$app_name"/venv/bin/pip --upgrade pip
 echo "Installing dependencies..."
 "$target_dir"/"$app_name"/venv/bin/pip install -r "$target_dir"/"$app_name"/requirements.txt
+
+chmod +x "$target_dir"/"$app_name"/launcher.sh
 
 echo "Script completed successfully."
