@@ -15,7 +15,10 @@ class External_Apps_Manager:
 
     def __init__(self) -> None:
         self.reset_working_config()
+        self.working_config.optionxform = str
         self.import_config()
+        self.config.optionxform = str
+
 
     def import_config(self):
         self.applications = []
@@ -49,6 +52,7 @@ class External_Apps_Manager:
     
     def set_applications(self, applications):
         count = 0
+        self.working_config.add_section("Applications")
         for i, app in enumerate(applications):
             section_name = f'Application_{i}'
             self.working_config[section_name] = {
@@ -74,7 +78,7 @@ class External_Apps_Manager:
             return self.config.options("Application").get("Count", 0)
         
     def set_count(self, count):
-        self.working_config["Applications"] = {"Count": count}
+        self.working_config.set("Applications", "Count", str(count))
         return True
         
     def reset_working_config(self):

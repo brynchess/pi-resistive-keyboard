@@ -24,6 +24,8 @@ echo "Creating a virtual environment..."
 python3 -m venv "$target_dir"/"$app_name"/venv
 
 # Step 4: Install dependencies from requirements.txt in the virtual environment
+echo "Installing new version of pip..."
+"$target_dir"/"$app_name"/venv/bin/pip --upgrade pip
 echo "Installing dependencies..."
 "$target_dir"/"$app_name"/venv/bin/pip install -r "$target_dir"/"$app_name"/requirements.txt
 
