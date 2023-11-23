@@ -8,7 +8,7 @@ class External_Apps_Manager:
     THIS_APP = {
         "Name": APP_NAME,
         "Path": "/home/pi/Scripts/pi-resistive-keyboard/launcher.sh",
-        "IconPath": "",
+        "IconPath": "/home/pi/Scripts/pi-resistive-keyboard/assets/logo.png",
         "Arguments": "",
         "Autostart": "True"
     }
