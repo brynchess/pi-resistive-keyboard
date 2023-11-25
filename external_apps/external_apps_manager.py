@@ -92,7 +92,6 @@ class External_Apps_Manager:
         for section in self.config.sections():
             if section.startswith('Application_'):
                 if self.config.get(section, 'Name', fallback='') == application_name:
-                    print(f"{application_name} is on list")
                     return True
         print(f"{application_name} is not on list")
         return False
