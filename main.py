@@ -28,7 +28,8 @@ def configure():
     from ina_integration.utils import ina
     uvicorn.run("fastapiconfig:endpointsApp", host="0.0.0.0", port=8000, log_level="info", reload=False)
     if args.install:
-         apps_manager.install_this_app()
+        webbrowser.open(BASE_URL)
+        apps_manager.install_this_app()
 
 if __name__ == "__main__" and app_is_down():
      configure()
