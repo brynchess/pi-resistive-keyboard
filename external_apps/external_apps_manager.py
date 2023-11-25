@@ -3,6 +3,7 @@ import configparser
 
 class External_Apps_Manager:
     CONFIG_URL = "/home/pi/.openauto/config/openauto_applications.ini"
+    BACKUP_CONFIG_URL = "/home/pi/.openauto/config/openauto_applications.ini.backup"
     EXAMPLE_CONFIG_URL = "./default_cfgs/example_openauto_applications.ini"
     APP_NAME = "Resistive Keyboard"
     THIS_APP = {
@@ -52,6 +53,8 @@ class External_Apps_Manager:
     def set_applications(self, applications):
         count = 0
         self.reset_working_config()
+        with open(self.BACKUP_CONFIG_URL, 'w') as configfile:
+            self.config.write(configfile)
         self.working_config.add_section("Applications")
         for i, app in enumerate(applications):
             section_name = f'Application_{i}'
