@@ -3,6 +3,7 @@ import configparser
 
 class External_Apps_Manager:
     CONFIG_URL = "/home/pi/.openauto/config/openauto_applications.ini"
+    BACKUP_CONFIG_URL = "/home/pi/.openauto/config/openauto_applications.ini.backup"
     EXAMPLE_CONFIG_URL = "./default_cfgs/example_openauto_applications.ini"
     APP_NAME = "Resistive Keyboard"
     THIS_APP = {
@@ -15,14 +16,13 @@ class External_Apps_Manager:
 
     def __init__(self) -> None:
         self.reset_working_config()
-        self.working_config.optionxform = str
         self.import_config()
-        self.config.optionxform = str
 
 
     def import_config(self):
         self.applications = []
         self.config = configparser.ConfigParser()
+        self.config.optionxform = str
         if os.path.exists(self.CONFIG_URL):
             self.config.read(self.CONFIG_URL)
         else:
@@ -37,11 +37,11 @@ class External_Apps_Manager:
         for i, section in enumerate(config.sections()):
             if section.startswith('Application_'):
                 app_info = {
-                    'Name': config.get(section, 'Name', fallback=''),
-                    'Path': config.get(section, 'Path', fallback=''),
-                    'IconPath': config.get(section, 'IconPath', fallback=''),
-                    'Arguments': config.get(section, 'Arguments', fallback=''),
-                    'Autostart': config.getboolean(section, 'Autostart', fallback=False),
+                    'Name': config.get(section, 'Name', fallback=config.get(section, "name", fallback="")),
+                    'Path': config.get(section, 'Path', fallback=config.get(section, "path", fallback="")),
+                    'IconPath': config.get(section, 'IconPath', fallback=config.get(section, "iconpath", fallback="")),
+                    'Arguments': config.get(section, 'Arguments', fallback=config.get(section, "arguments", fallback="")),
+                    'Autostart': config.getboolean(section, 'Autostart', fallback=config.get(section, "autostart", fallback=False)),
                 }
                 self.applications.append(app_info)
             self.count = i
@@ -52,6 +52,9 @@ class External_Apps_Manager:
     
     def set_applications(self, applications):
         count = 0
+        self.reset_working_config()
+        with open(self.BACKUP_CONFIG_URL, 'w') as configfile:
+            self.config.write(configfile)
         self.working_config.add_section("Applications")
         for i, app in enumerate(applications):
             section_name = f'Application_{i}'
@@ -83,12 +86,15 @@ class External_Apps_Manager:
         
     def reset_working_config(self):
         self.working_config = configparser.ConfigParser()
+        self.working_config.optionxform = str
 
     def check_application_existence(self, application_name):
         for section in self.config.sections():
             if section.startswith('Application_'):
                 if self.config.get(section, 'Name', fallback='') == application_name:
+                    print(f"{application_name} is on list")
                     return True
+        print(f"{application_name} is not on list")
         return False
     
     def add_app(self, app_info):
