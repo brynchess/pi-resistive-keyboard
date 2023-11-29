@@ -32,4 +32,5 @@ The application was designed to work with [OpenAuto Pro](https://bluewavestudio.
 You need to find the cable responsible for transmitting data from the steering wheel and connect it to the connector marked in the diagram.
 The INA219 module should be connected to the Raspberry Pi i2c bus.
 If you are already using the i2c pins, don't worry, the bus allows you to connect many devices to it in parallel.
+
 ![steering wheel](https://github.com/brynchess/pi-resistive-keyboard/assets/57867982/020d7f24-393b-47ae-8f44-3593d1fd1a80)
