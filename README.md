@@ -34,3 +34,11 @@ The INA219 module should be connected to the Raspberry Pi i2c bus.
 If you are already using the i2c pins, don't worry, the bus allows you to connect many devices to it in parallel.
 
 ![steering wheel](https://github.com/brynchess/pi-resistive-keyboard/assets/57867982/020d7f24-393b-47ae-8f44-3593d1fd1a80)
+
+## Screenshots
+
+![Zrzut ekranu 2023-11-29 200620](https://github.com/brynchess/pi-resistive-keyboard/assets/57867982/0c39f1e2-602a-441f-a3ca-5cbef505c838)
+![Zrzut ekranu 2023-11-29 200611](https://github.com/brynchess/pi-resistive-keyboard/assets/57867982/ebfa6324-2ba7-4ab7-9838-581b625b7366)
+![Zrzut ekranu 2023-11-29 200602](https://github.com/brynchess/pi-resistive-keyboard/assets/57867982/a3bd9acb-7258-4238-806b-098daeb85ac4)
+![Zrzut ekranu 2023-11-29 200547](https://github.com/brynchess/pi-resistive-keyboard/assets/57867982/5ec9e697-b6b1-45bc-9e17-da873baa5e97)
+![Zrzut ekranu 2023-11-29 200627](https://github.com/brynchess/pi-resistive-keyboard/assets/57867982/25b19bf3-67ee-40f8-a896-e145c0a1e317)
